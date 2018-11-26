@@ -2,7 +2,7 @@
 
 #### TL;DR 
 
-`getS3SignedGetUrl()` function to create so called [presigned URLs](https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html) for GET requests to private buckets in AWS S3. Copy [UrlGenerator.gs](https://raw.githubusercontent.com/kmotrebski/gas-s3-url-generator/master/UrlGenerator.gs) file into your Script Editor, fill in your credentials and use it this way:
+`getS3SignedGetUrl()` function to create so called [presigned URLs](https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html) to private buckets in AWS S3. Copy [UrlGenerator.gs](https://raw.githubusercontent.com/kmotrebski/gas-s3-url-generator/master/UrlGenerator.gs) file into your Script Editor, fill in your credentials and use it this way:
 
  ```
  =getS3SignedGetUrl("bucket_name", "path/to/file.csv")
@@ -18,19 +18,21 @@ Goal of this helper is to download, in a secure way, data from **private** S3 bu
 
 To do this you need to generate so called "signed" URLs but the logic responsible for it is quite complex. You can check [AWS documentation](https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html) if you don't belive! 
 
-This helper function does all of it and you can use it as simple function directly in your cell formulas: `=getS3SignedGetUrl("bucket_name", "path/to/file.csv")`!
+This helper function does all of it and you can use it in a simple way directly in your cell formulas: `=getS3SignedGetUrl("bucket_name", "path/to/file.csv")`!
 
 ##### Use case scenario
 
-It may look like this: `production DB` => `script running daily/hourly` => `data uploaded into S3` => `data pulled into Google Sheets`. Data uploaded into S3 can be in a from of CSV file. You can use `IMPORTDATA()` function to populate columns. You can also set up triggers in your spreadsheet settings that will download data even every minute. This will make your reports/charts updated.   
+It may look like this: `production DB` => `script running daily/hourly` => `data uploaded into S3` => `data pulled into Google Sheets`. Data uploaded into S3 can be in a form of CSV file. You can use `IMPORTDATA()` function to populate columns. You can also set up triggers in your spreadsheet settings that will download data even every minute. This will make your reports/charts always up-to-date and completely automatic.   
 
 ### Prerequisites
 
 - Private S3 bucket with some files (aka objects) uploaded that you now want to import into your spreadsheet, e.g. some `*.csv` file
 - Security credentials (access keys) with read access to the bucket, [read more here](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys)
-- Google Sheet document that you want to pull data into
+- Google Sheet document that you want to download data into
 
 ### Installation
+
+It's about single copy&paste:
  
  - open Google Spreadsheet document or create new one, go to Script Editor by `Tools` > `Script Editor`
  - In Script Editor add a `UrlGenerator.gs` file this way: `File` > `New` -> `Script file`. Copy&paste contents of `UrlGenerator.gs` file from this repository, [it is here](https://raw.githubusercontent.com/kmotrebski/gas-s3-url-generator/master/UrlGenerator.gs)
