@@ -22,7 +22,7 @@ This helper function does all of it and you can use it in a simple way directly 
 
 ##### Use case scenario
 
-It may look like this: `production DB` => `script running daily/hourly` => `data uploaded into S3` => `data pulled into Google Sheets`. Data uploaded into S3 can be in a form of CSV file. You can use `IMPORTDATA()` function to populate columns. You can also set up triggers in your spreadsheet settings that will download data even every minute. This will make your reports/charts always up-to-date and completely automatic.   
+It may look like this: `production DB` => `script running daily/hourly` => `data uploaded into S3` => `data pulled into Google Sheets`. Data uploaded into S3 can be in a form of CSV file. You can use `IMPORTDATA()` function to populate columns. You can also set up triggers in your spreadsheet settings that will download data even every minute. This will make your reports/charts always up-to-date and completely automatic. See sections below for usage.
 
 ### Prerequisites
 
@@ -60,10 +60,9 @@ It's about single copy&paste:
 
 #### Automatic triggers
 
-You can also set up automatic triggers and set up settings to update data regularly, even every 1 minute. 
-- You will have to add new file to your project, in a similar way you did it before.
-- Copy&paste `Trigger.gs` file [from this repository](https://github.com/kmotrebski/gas-s3-url-generator/blob/master/UrlGenerator.gs) into your project and follow instructions in the file comments
-- File is located here   
+You can also set up automatic triggers to update data regularly, even every single minute! This will make your data constantly updated.
+
+Add new file to your project, in a similar way you did it before. Copy&paste `Trigger.gs` file [from this repository](https://github.com/kmotrebski/gas-s3-url-generator/blob/master/UrlGenerator.gs) into your project and follow instructions in the file comments.
 
 ### Reach out to me
 
