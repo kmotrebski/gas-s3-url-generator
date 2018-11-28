@@ -40,14 +40,15 @@ function _internalGenerateS3GetUrlGivenAllParams(
 
     var datetime = new Date(timestamp);
 
-    var canonicalRequest = _buildCanonicalRequest(aws_key, bucket, path, datetime, region, expires);
+    var canonicalRequest = _buildCanonicalRequest(aws_key, bucket, path, timestamp, region, expires);
     var stringToSign = _buildStringToSign(canonicalRequest, region, datetime);
     var signingKey = _computeSigningKey(aws_secret, datetime, region);
     var signature = _computeSignature(signingKey, stringToSign);
     var amzDate = _dateInto8601(datetime);
     var amzCredential = _getAmzCredential(aws_key, datetime, region);
 
-    var presignedURL = 'https://' + bucket + '.s3.amazonaws.com/' + encodeURIComponent(path)  +
+    var host = _buildHost(bucket, region);
+    var presignedURL = 'https://' + host + '/' + encodeURIComponent(path)  +
         '?X-Amz-Algorithm=AWS4-HMAC-SHA256' +
         '&X-Amz-Credential=' + amzCredential +
         '&X-Amz-Date=' + amzDate +
@@ -58,11 +59,18 @@ function _internalGenerateS3GetUrlGivenAllParams(
     return presignedURL;
 }
 
-function _buildCanonicalRequest(aws_key, bucket, path, datetime, region, expires) {
+function _buildHost(bucket, region) {
+    var host = bucket + '.s3.' + region + '.amazonaws.com';
+    return host;
+}
+
+function _buildCanonicalRequest(aws_key, bucket, path, timestamp, region, expires) {
+
+    var datetime = new Date(timestamp);
 
     var amzCredential = _getAmzCredential(aws_key, datetime, region);
     var amzDate = _dateInto8601(datetime);
-    var host = bucket + '.s3.amazonaws.com';
+    var host = _buildHost(bucket, region);
 
     var requestFormat = 'GET\n'+
         '/%s\n'+
